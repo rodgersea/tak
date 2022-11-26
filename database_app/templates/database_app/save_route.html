@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Add route to project list</h3>
+
+<div class="container">
+	<form action="/saved_climb/" method="post">
+		{% csrf_token %}
+		
+		<div class="form-floating mb-3 mt-3">
+			<input id="route_id" name="route_name" type="text" list="route_list" class="form-control" placeholder="placeholder">
+				<datalist id="route_list">
+					{% for route in routes %}
+						<option value="{{ route }}">
+					{% endfor %}
+				</datalist>
+			<label for="route_id">Route:</label>
+		</div>
+			
+			<input
+				id="submit-button"
+				class="btn btn-dark"
+				value="Save"
+				type="submit">
+	</form>
+</div>
+
+<br>
+<h5>Project list:</h5>
+<ul>
+{% for route in saved_routes %}
+	<li>{{ route.route }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

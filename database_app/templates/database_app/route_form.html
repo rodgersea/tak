@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<h3>Add route to database</h3>
+
+<div class="container">
+	<form action="/add_route/" method="post">
+		{% csrf_token %}
+		
+		<div class="form-floating mb-3 mt-3">
+			<input id="area_id" name="area_name" type="text" list="area_list" class="form-control" placeholder="placeholder">
+
+			<datalist id="area_list">
+				{% for area in areas %}
+					<option value="{{ area }}">
+				{% endfor %}
+			</datalist>
+			<label for="area_id">Area:</label>
+		</div>
+			
+		<div class="form-floating mb-3 mt-3">
+			<input id="sector_id" name="sector_name" type="text" list="sector_list" class="form-control" placeholder="placeholder">
+			<datalist id="sector_list">
+				{% for sector in sectors %}
+					<option value="{{ sector }}">
+				{% endfor %}
+			</datalist>
+			<label for="area_id">Sector:</label>
+		</div>
+		
+		<div class="form-floating mb-3 mt-3">
+			<input id="crag_id" name="crag_name" type="text" list="crag_list" class="form-control" placeholder="placeholder">
+			<datalist id="crag_list">
+				{% for crag in crags %}
+					<option value="{{ crag }}">
+				{% endfor %}
+			</datalist>
+			<label for="crag_id">Crag:</label>
+		</div>
+		
+		<div class="form-floating mb-3 mt-3">
+			<input id="wall_id" name="wall_name" type="text" list="wall_list" class="form-control" placeholder="placeholder">
+			<datalist id="wall_list">
+				{% for wall in walls %}
+					<option value="{{ wall }}">
+				{% endfor %}
+			</datalist>
+			<label for="wall_id">Wall:</label>
+		</div>
+		
+		<div class="form-floating mb-3 mt-3">
+			<input id="route_id" name="route_name" type="text" list="route_list" class="form-control" placeholder="placeholder">
+			<datalist id="route_list">
+				{% for route in routes %}
+					<option value="{{ route }}">
+				{% endfor %}
+			</datalist>
+			<label for="route_id">Route:</label>
+		</div>
+
+		<input
+			id="submit-button"
+			class="btn btn-dark"
+			value="Save"
+			type="submit">
+	</form>
+</div>
+<br>
+<p>Last submission: {{ last_added }}</p>
+
+<script>
+var input = document.getElementById("submit-button");
+input.addEventListener("keypress", function(event) {
+	if (event.key === "Enter") {
+		event.preventDefault();
+		document.getElementById("submit-button").click();
+	}
+}
+</script>
+
+{% endblock %}
+

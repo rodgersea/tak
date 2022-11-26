@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>My projects</h3>
+
+<div class="container">
+	<p>Select route to view project history</p>
+
+	{% for route in savedclimbs %}
+		<input
+			value="{{ route.route }}"
+			type="button"
+			class="btn btn-secondary"
+			onclick="location.href='{% url 'project-details' route.id %}'"/>
+		<br><br>
+	{% endfor %}
+</div>
+
+{% endblock %}

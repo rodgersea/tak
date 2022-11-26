@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Project: {{ route.route }}</h3><br>
+
+{% for session in sessions %}
+	<div class="card-group w-50">		
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Session: {{ session }}</h5>
+			</div>
+			<div class="card-group">
+			{% for attempt in attempts %}
+				{% if attempt.session == session %}
+					<div class="card">
+						<div class="card-body">
+							<p class="card-text">date: {{ attempt.date }}</p>
+							<p class="card-text">attempt: {{ attempt.attempt }}</p>
+							<p class="card-text">notes: {{ attempt.notes }}</p>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+	<br>
+{% endfor %}
+
+{% endblock %}

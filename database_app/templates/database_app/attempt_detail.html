@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<h3>project detail: {{ route.route }}</h3>
+<div>
+    <div>
+        {% for attempt in attempts %}
+			<p>attempt:</p>
+			<div>session: {{ attempt.session }}</div>
+			<div>attempt: {{ attempt.attempt }}</div>
+		{% endfor %}
+	</div>
+</div>	
+
+{% endblock %}
+
