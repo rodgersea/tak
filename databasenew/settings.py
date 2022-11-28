@@ -78,15 +78,12 @@ USE_I18N = True
 USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-ALLOWED_HOSTS = ['0.0.0.0',
-                 'localhost',
-                 '127.0.0.1',
-                 'https://tak-route.herokuapp.com/',
+ALLOWED_HOSTS = ['*'
                  ]
 
 #  EMAIL_HOST_USER = os.environ.get('elliottarodgers@gmail.com')
