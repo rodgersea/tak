@@ -1,22 +1,23 @@
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import login, logout, authenticate
-
-from django.urls import reverse, reverse_lazy
+from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
+from django.db.models import Count
 from django.views import generic
 from datetime import date
 from .models import *
 from .forms import *
-from django.views.generic import (
-    ListView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-    DetailView
-)
+try:
+    from django.contrib.auth import get_user_model
+    user_model = get_user_model()
+except ImportError:
+    from django.contrib.auth.models import User
+    user_model = User
 
 
 # landing page
@@ -25,6 +26,7 @@ def home(request):
                   'home.html')
 
 
+# register new user - redirect to login page
 class SignUp(SuccessMessageMixin, generic.CreateView):
     form_class = SignupForm
     template_name = 'register.html'
@@ -37,6 +39,8 @@ class SignUp(SuccessMessageMixin, generic.CreateView):
         return redirect('login')
 
 
+# login user - redirect to home page
+# change extended base html once user authenticated
 class LogIn(generic.View):
     form_class = LoginUserForm
     template_name = 'login.html'
@@ -67,6 +71,7 @@ class LogIn(generic.View):
         return render(request, 'databasenew/login.html', {'form': form})
 
 
+# logout user - redirect to unauthenticated homepage
 class LogOut(LoginRequiredMixin, generic.View):
     login_url = 'login'
 
@@ -74,12 +79,6 @@ class LogOut(LoginRequiredMixin, generic.View):
         logout(request)
         messages.success(request, 'User logged out')
         return redirect('home')
-
-
-# unsure if this is being used
-class RouteListView(ListView):
-    model = Route
-    template_name = 'route_list.html'
 
 
 # loads html page with context data to add a route to the general database
@@ -93,6 +92,7 @@ def route_create(request):
         'walls': Route.objects.all().values_list('wall', flat=True).distinct(),
         'routes': Route.objects.all().values_list('route', flat=True).distinct(),
         'last_added': Route.objects.last(),
+        'form': form,
     }
     if request.method == 'POST':
         route = request.POST['route_name']
@@ -198,9 +198,9 @@ def session_form(request, route_id):
                   context=context)
 
 
+# create session object linked to user and route
 def create_session(request, route_id):
     route = Route.objects.get(id=route_id)
-
     pass_session = request.POST['session_name']
     pass_attempt = request.POST['attempt_name']
     pass_date = request.POST['date_name']
@@ -233,6 +233,8 @@ class OpenProjects(ListView):
         return context
 
 
+# detail type view for a user's specific project
+# html displays project info in cards
 def project_view(request, route_id):
     attempts = Attempt.objects.filter(route=route_id)
     sessions = Attempt.objects.filter(route=route_id).values_list('session', flat=True).distinct()

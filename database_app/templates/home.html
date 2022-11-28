@@ -1,4 +1,4 @@
-{% extends "registration_base.html" %}
+{% extends "base.html" %}
 {% block content %}
 
 {% if user.is_authenticated %}
@@ -12,5 +12,15 @@
 		<h3>Welcome!</h3>
 	</div>
 {% endif %}
-	
+
+<div>
+	<p>How to use TAK to track your project efforts:</p>
+	<ol>
+		<li>Add route to database</li>
+		<li>Add route to projects</li>
+		<li>Add session to project</li>
+		<li>View your projects!</li>
+	</ol>
+</div>
+
 {% endblock %}

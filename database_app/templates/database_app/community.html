@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<h3>Active users: {{ usercount }}</h3>
+
+<div class="w-50">
+	{% for user in users %}
+		<input
+			value="{{ user }}"
+			type="button"
+			class="btn btn-secondary"
+			onclick="location.href='{% url 'add-friend' user.id %}'"/>
+		<br><br>
+	{% endfor %}
+	
+	<ul>	
+	{% for friend in friends %}
+		<li>{{ friend.friend }}</li>
+	{% endfor %}
+	</li>
+</div>
+
+{% endblock %}
+

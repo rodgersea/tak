@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.urls import path
 from django.contrib.auth import views as auth_views
 from database_app import views as user_views
+from django.contrib import admin
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -21,9 +21,6 @@ urlpatterns = [
          user_views.home,
          name='home'),
 
-    path('route/<int:area_id>/',
-         views.RouteListView.as_view(),
-         name='route'),
     path('route/add',
          views.route_create,
          name='route-add'),

@@ -4,7 +4,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['tak-route.herokuapp.com']
+ALLOWED_HOSTS = ['tak-route.herokuapp.com',
+                 '127.0.0.1',]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-o8ks7@z9lsic(q7x&u11*hq58f@iv=@468^@)7tf#g3nax8v6!'
@@ -82,10 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
