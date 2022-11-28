@@ -4,6 +4,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOWED_HOSTS = ['tak-route.herokuapp.com']
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-o8ks7@z9lsic(q7x&u11*hq58f@iv=@468^@)7tf#g3nax8v6!'
 
