@@ -1,9 +1,12 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login, logout, authenticate
+
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm
 from django.contrib import messages
+from django.views import generic
 from datetime import date
 from .models import *
 from .forms import *
@@ -22,20 +25,55 @@ def home(request):
                   'home.html')
 
 
-# method to register new user
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your account has been created. You can log in now!')
-            return redirect('login')
-    else:
-        form = UserRegistrationForm()
-    context = {'form': form}
-    return render(request,
-                  'register.html',
-                  context)
+class SignUp(SuccessMessageMixin, generic.CreateView):
+    form_class = SignupForm
+    template_name = 'register.html'
+    success_url = reverse_lazy('login')
+    success_message = 'user created, now login'
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR,
+                             'invalid')
+        return redirect('login')
+
+
+class LogIn(generic.View):
+    form_class = LoginUserForm
+    template_name = 'login.html'
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = LoginUserForm(request, data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+
+                user = authenticate(username=username, password=password)
+
+                if user is not None:
+                    login(request, user)
+                    messages.success(
+                        request, f'You are logged in as {username}')
+                    return redirect('home')
+                else:
+                    messages.error(request, 'Error')
+            else:
+                messages.error(request, 'Username or password incorrect')
+        form = LoginUserForm()
+        return render(request, 'databasenew/login.html', {'form': form})
+
+
+class LogOut(LoginRequiredMixin, generic.View):
+    login_url = 'login'
+
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'User logged out')
+        return redirect('home')
 
 
 # unsure if this is being used

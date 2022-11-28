@@ -8,9 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o8ks7@z9lsic(q7x&u11*hq58f@iv=@468^@)7tf#g3nax8v6!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,7 +18,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'database_app',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -109,5 +106,3 @@ STATIC_URL = 'database_app/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

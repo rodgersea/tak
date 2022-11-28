@@ -1,12 +1,31 @@
+{% extends "registration_base.html" %}
 
-<h3>login</h3>
+{% block content %}
 
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-        <p>{{ field.label }}: <br> {{ field }}</p>
-    {% endfor %}
-    <button type="submit">Login</button>
-</form>
+<header>
+	<div class="ms-4 w-50">
+		<div class="bg-light">
+			<h3 class="p-3 ms-2">Login</h3>
+		</div>
+	</div>	
+</header>
 
-<p>Don't have an account? <a href="{% url 'register' %}">Signup here</a></p>
+<div class="ms-4 mt-2 me-5 w-50">
+	<form method="post">
+		{% csrf_token %}
+
+		{% for field in form %}
+			<div class="form-floating">
+				<p>{{ field.label }}: <br> {{ field }}</p> 
+
+				{% for error in field.errors %}
+					<small style="color: red">{{ error }}</small>
+				{% endfor %}
+			</div>
+		{% endfor %}
+
+		<button type="submit" class="btn btn-primary mt-3">Login</button>
+	</form>
+</div>
+
+{% endblock %}

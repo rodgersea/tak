@@ -1,33 +1,31 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h3>add session/attempt to: {{ route }}</h3>
 
-<div>
-	<form action="create_session/" method="post">
-		{% csrf_token %}
-		<div class="form-floating mb-3 mt-3">
-			<input id="session_id" name="session_name" type="number" class="form-control">
-			<label for="session_id">Session:</label>
-		</div>
-		<div class="form-floating mb-3 mt-3">
-			<input id="attempt_id" name="attempt_name" type="number" class="form-control">
-			<label for="attempt_id">Attempt:</label>
-		</div>
-		<div class="form-floating mb-3 mt-3">
-			<input id="date_id" name="date_name" type="date" class="form-control">
-			<label for="date_id">Date:</label>
-		</div>
-		<div class="form-floating mb-3 mt-3">
-			<input id="notes_id" name="notes_name" type="text" class="form-control">
-			<label for="notes_id">Notes:</label>
-		</div>
-		
-		<input
-			id="submit-button"
-			class="btn btn-dark"
-			value="Save"
-			type="submit">
-	</form>
-</div>
+<h3>add session/attempt to: {{ route }}</h3>
+<form action="create_session/" method="post">
+	{% csrf_token %}
+	<div class="form-floating mb-3 mt-3">
+		<input id="session_id" name="session_name" type="number" class="form-control">
+		<label for="session_id">Session:</label>
+	</div>
+	<div class="form-floating mb-3 mt-3">
+		<input id="attempt_id" name="attempt_name" type="number" class="form-control">
+		<label for="attempt_id">Attempt:</label>
+	</div>
+	<div class="form-floating mb-3 mt-3">
+		<input id="date_id" name="date_name" type="date" class="form-control">
+		<label for="date_id">Date:</label>
+	</div>
+	<div class="form-floating mb-3 mt-3">
+		<input id="notes_id" name="notes_name" type="text" class="form-control">
+		<label for="notes_id">Notes:</label>
+	</div>
+	
+	<input
+		id="submit-button"
+		class="btn btn-dark"
+		value="Save"
+		type="submit">
+</form>
+
 {% endblock %}

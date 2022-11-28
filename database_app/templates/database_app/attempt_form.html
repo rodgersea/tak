@@ -2,15 +2,13 @@
 
 {% block content %}
 {% load static %}
-<div>
-    <div>
-		<p>{{ route }}</p>
-        <form method="post" enctype="multipart/form-data>
-			{{ form.as_p }}
-            {% csrf_token %}
-			<input type="submit" value="Submit">
-		</form>
-	</div>
+<div class="w-50">
+	<p>{{ route }}</p>
+	<form method="post" enctype="multipart/form-data>
+		{{ form.as_p }}
+		{% csrf_token %}
+		<input type="submit" value="Submit">
+	</form>
 </div>	
 
 {% endblock %}

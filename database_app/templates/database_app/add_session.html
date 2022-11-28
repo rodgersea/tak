@@ -2,19 +2,17 @@
 
 {% block content %}
 <h3>My projects</h3>
+<p>Select route to open up session/attempt form</p>
 
-<div class="container">
-	<p>Select route to open up session/attempt form</p>
-	
-	{% for route in routes %}
-		<input
-			value="{{ route.route }}"
-			type="button"
-			class="btn btn-secondary"
-			onclick="location.href='{% url 'session-form' route.id %}'"/>
-		<br><br>
+{% for route in routes %}
+	<input
+		value="{{ route.route }}"
+		type="button"
+		class="btn btn-secondary"
+		onclick="location.href='{% url 'session-form' route.id %}'"/>
+	<br><br>
 	{% empty %}
 	<h4>You have no projects</h4>
-	{% endfor %}
+{% endfor %}
 
 {% endblock %}
