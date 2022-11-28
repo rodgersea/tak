@@ -52,28 +52,26 @@
 	{% else %}
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light bg-white">
-				<div class="container-fluid">    
-					<button
-						class="navbar-toggler"
-						type="button"
-						data-mdb-toggle="collapse"
-						data-mdb-target="#basenavbar"
-						aria-controls="basenavbar"
-						aria-expanded="false"
-						aria-label="Toggle navigation">
-						<i class="fas fa-bars"></i>
-					</button>
-					
-					<div class="collapse navbar-collapse" id="basenavbar">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a>
-							</li>
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
-							</li>
-						</ul>
-					</div>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-mdb-toggle="collapse"
+					data-mdb-target="#basenavbar"
+					aria-controls="basenavbar"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="basenavbar">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item active">
+							<a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
+						</li>
+					</ul>
 				</div>
 			</nav>
 		</header>
