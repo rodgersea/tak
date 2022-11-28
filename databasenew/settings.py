@@ -86,7 +86,8 @@ MEDIA_URL = '/media/'
 ALLOWED_HOSTS = ['0.0.0.0',
                  'localhost',
                  '127.0.0.1',
-                 'databasenew-herokuapp.herokuapp.com']
+                 'https://tak-route.herokuapp.com/',
+                 ]
 
 #  EMAIL_HOST_USER = os.environ.get('elliottarodgers@gmail.com')
 #  EMAIL_HOST_PASSWORD =
