@@ -78,7 +78,6 @@ class LogOut(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         logout(request)
-        messages.success(request)
         return redirect('home')
 
 
