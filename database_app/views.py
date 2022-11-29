@@ -3,6 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -12,9 +13,6 @@ from django.views import generic
 from datetime import date
 from .models import *
 from .forms import *
-
-from django.contrib.auth.forms import UserCreationForm
-
 try:
     from django.contrib.auth import get_user_model
     user_model = get_user_model()
@@ -29,62 +27,49 @@ def home(request):
                   'home.html')
 
 
-# register new user - redirect to login page
-class SignUp(SuccessMessageMixin, generic.CreateView):
-    form_class = SignupForm
-    template_name = 'register.html'
-    success_url = reverse_lazy('login')
-    success_message = 'user created, now login'
+# new user registration
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'your account has been created.')
+            return redirect('login')
+        elif pass1 != pass2:
+            messages.error(request, f'passwords do not match')
+    else:
+        form = RegisterForm()
 
-    def form_invalid(self, form):
-        messages.add_message(self.request, messages.ERROR,
-                             'invalid')
-        return redirect('register')
+    context = {'form': form}
+    return render(request,
+                  'register.html',
+                  context)
 
 
 # login user - redirect to home page
 # change extended base html once user authenticated
-class LogIn(generic.View):
-    form_class = LoginUserForm
-    template_name = 'login.html'
+def loginuser(request):
+    form = LoginUserForm()
+    if request.method == 'POST':
+        messages.error(request, '')
+        form = LoginUserForm(request.POST)
+        user = authenticate(
+            username=request.POST['username'],
+            password=request.POST['password']
+        )
 
-    def get(self, request):
-        form = self.form_class
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        if request.method == 'POST':
-            form = LoginUserForm(request, data=request.POST)
-            if form.is_valid():
-                username = form.cleaned_data.get('username')
-                password = form.cleaned_data.get('password')
-
-                user = authenticate(username=username, password=password)
-
-                if user is not None:
-                    login(request, user)
-                    messages.success(
-                        request, f'You are logged in as {username}')
-                    return redirect('home')
-                else:
-                    context = {
-                        'error': 'user already exists'
-                    }
-                    return render(request,
-                                  'login.html',
-                                  {'form': form},
-                                  )
-            else:
-                context = {
-                    'error': 'incorrect username/password combination'
-                }
-
-                return render(request,
-                              'login.html',
-                              {'form': form},
-                              )
-        form = LoginUserForm()
-        return render(request, 'login.html', {'form': form})
+        if user:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request,
+                           f'incorrect username/password combination')
+    context = {'form': form}
+    return render(request,
+                  'login.html',
+                  context)
 
 
 # logout user - redirect to unauthenticated homepage
@@ -93,7 +78,7 @@ class LogOut(LoginRequiredMixin, generic.View):
 
     def get(self, request):
         logout(request)
-        messages.success(request, 'User logged out')
+        messages.success(request)
         return redirect('home')
 
 

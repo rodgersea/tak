@@ -7,10 +7,10 @@ from . import views
 urlpatterns = [
     # user registraion and login
     path('register/',
-         views.SignUp.as_view(),
+         views.register,
          name='register'),
     path('login/',
-         views.LogIn.as_view(),
+         views.loginuser,
          name='login'),
     path('logout/',
          views.LogOut.as_view(),

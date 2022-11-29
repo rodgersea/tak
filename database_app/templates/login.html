@@ -1,36 +1,27 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-
-<header>
-	<div class="ms-4">
-		<div class="bg-light">
-			<h3 class="p-3 ms-2">Login</h3>
-		</div>
-	</div>	
-</header>
-
-<div class="ms-4 mt-2 me-5">
-	<form method="post">
-		{% csrf_token %}
-
-		{% for field in form %}
-			<div class="form-floating">
-				<p>{{ field.label }}: <br> {{ field }}</p> 
-
-				{% for error in field.errors %}
-					<small style="color: red">{{ error }}</small>
-				{% endfor %}
+	<header>
+		<div class="ms-4">
+			<div class="bg-light">
+				<h3 class="p-3 ms-2">Login</h3>
 			</div>
+		</div>	
+	</header>
+
+	<div class="ms-4 mt-2 me-5">
+		<form method="post">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<button type="submit" class="btn btn-primary mt-3">Login</button>
+		</form>
+	</div>
+
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
 		{% endfor %}
-
-		<div>password must be 8 characters, with special and uppercase</div>
-
-		<button type="submit" class="btn btn-primary mt-3">Login</button>
-	</form>
-	{% if error %}
-		<div>{{ error }}</div>
+	</ul>
 	{% endif %}
-</div>
-
 {% endblock %}
