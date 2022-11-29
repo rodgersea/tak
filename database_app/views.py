@@ -126,7 +126,7 @@ def route_create(request):
                   context=context)
 
 
-# method to add route, could this be added with an if mehtod == POST to route_create()?
+# method to add route to general database, could this be added with an if mehtod == POST to route_create()?
 def add_route(request):
     if request.method == 'POST':
         route = request.POST['route_name']
@@ -155,7 +155,7 @@ def add_route(request):
 def save_route(request):
     context = {
         'routes': Route.objects.all(),
-        'saved_routes': SavedClimb.objects.all()
+        'saved_routes': SavedClimb.objects.all().filter(user=request.user)
     }
     return render(request,
                   'database_app/save_route.html',
