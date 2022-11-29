@@ -64,11 +64,16 @@ class LogIn(generic.View):
                         request, f'You are logged in as {username}')
                     return redirect('home')
                 else:
-                    messages.error(request, 'Error')
+                    context = {
+                        'error': 'incorrect username/password combination'
+                    }
+                    return render(request,
+                                  'login.html',
+                                  context=context)
             else:
                 messages.error(request, 'Username or password incorrect')
         form = LoginUserForm()
-        return render(request, 'databasenew/login.html', {'form': form})
+        return render(request, 'login.html', {'form': form})
 
 
 # logout user - redirect to unauthenticated homepage
