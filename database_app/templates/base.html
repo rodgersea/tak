@@ -5,77 +5,51 @@
   <title>TAK</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
 <body>
-	{% if user.is_authenticated %}
-		<header>
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<div class="container-fluid">    
-					<button
-						class="navbar-toggler"
-						type="button"
-						data-mdb-toggle="collapse"
-						data-mdb-target="#basenavbar"
-						aria-controls="basenavbar"
-						aria-expanded="false"
-						aria-label="Toggle navigation">
-						<i class="fas fa-bars"></i>
-					</button>
-					
-					<div class="collapse navbar-collapse" id="basenavbar">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-1">
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
-							</li>
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'route-add' %}">Add route to database</a>
-							</li>
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'save-route' %}">Add route to projects</a>
-							</li>
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'session' %}">Add session</a>
-							</li>
-							<li class="nav-item active">
-								<a class="nav-link" aria-current="page" href="{% url 'open-projects' %}">My projects</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</header>
-	{% else %}
-		<header>
-			<nav class="navbar navbar-expand-lg navbar-light bg-white">
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-mdb-toggle="collapse"
-					data-mdb-target="#basenavbar"
-					aria-controls="basenavbar"
-					aria-expanded="false"
-					aria-label="Toggle navigation">
-					<i class="fas fa-bars"></i>
+		{% if user.is_authenticated %}
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a href="#" class="navbar-brand">TAK</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
 				</button>
-				
-				<div class="collapse navbar-collapse" id="basenavbar">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<div class="navbar-nav">
+					<ul class="navbar-nav mr-auto mb-2 mb-lg-0 ms-1">
+						<a class="nav-item nav-link active" href="{% url 'home' %}">Home</a>
+						<a class="nav-item nav-link active" href="{% url 'route-add' %}">Add route to database</a>
+						<a class="nav-item nav-link active" href="{% url 'save-route' %}">Add route to projects</a>
+						<a class="nav-item nav-link active" href="{% url 'session' %}">Add session</a>
+						<a class="nav-item nav-link active" href="{% url 'open-projects' %}">My projects</a>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		{% else %}
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto mb-2 mb-lg-0 ms-1">
 						<li class="nav-item active">
 							<a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a>
 						</li>
 						<li class="nav-item active">
 							<a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
 						</li>
-					</ul>
-				</div>
-			</nav>
-		</header>
-	{% endif %}
+				</ul>
+			</div>
+		{% endif %}
+		</nav>
+
 	
     <div id="content" class="ms-4 mt-2 w-50">
         {% block content %}
