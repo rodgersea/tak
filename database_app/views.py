@@ -65,7 +65,7 @@ def loginuser(request):
             return redirect('home')
         else:
             messages.error(request,
-                           f'incorrect username/password combination')
+                           f'Incorrect username/password combination')
     context = {'form': form}
     return render(request,
                   'login.html',
