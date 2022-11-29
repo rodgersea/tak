@@ -1,5 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.forms.fields import EmailField
+from django.forms.forms import Form
 from django import forms
 from .models import *
 
@@ -75,4 +78,5 @@ class ClimbElementForm(forms.Form):
     crag = forms.CharField(max_length=50)
     wall = forms.CharField(max_length=50)
     route = forms.CharField(max_length=50)
+
 

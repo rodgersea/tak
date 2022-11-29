@@ -12,6 +12,9 @@ from django.views import generic
 from datetime import date
 from .models import *
 from .forms import *
+
+from django.contrib.auth.forms import UserCreationForm
+
 try:
     from django.contrib.auth import get_user_model
     user_model = get_user_model()
@@ -36,7 +39,7 @@ class SignUp(SuccessMessageMixin, generic.CreateView):
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR,
                              'invalid')
-        return redirect('login')
+        return redirect('register')
 
 
 # login user - redirect to home page
@@ -65,13 +68,21 @@ class LogIn(generic.View):
                     return redirect('home')
                 else:
                     context = {
-                        'error': 'incorrect username/password combination'
+                        'error': 'user already exists'
                     }
                     return render(request,
                                   'login.html',
-                                  context=context)
+                                  {'form': form},
+                                  )
             else:
-                messages.error(request, 'Username or password incorrect')
+                context = {
+                    'error': 'incorrect username/password combination'
+                }
+
+                return render(request,
+                              'login.html',
+                              {'form': form},
+                              )
         form = LoginUserForm()
         return render(request, 'login.html', {'form': form})
 
