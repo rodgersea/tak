@@ -10,8 +10,7 @@ AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
 
 
 class Route(models.Model):
-    route = models.CharField(max_length=50,
-                             unique=True)
+    route = models.CharField(max_length=50, unique=True)
     wall = models.CharField(max_length=50)
     crag = models.CharField(max_length=50)
     sector = models.CharField(max_length=50)
